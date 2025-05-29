@@ -23,7 +23,8 @@ read.csv2("C:/Users/ESLil/OneDrive/Desktop/ST 558/Repos/Homework3/Homework-3/Dat
 read.table("C:/Users/ESLil/OneDrive/Desktop/ST 558/Repos/Homework3/Homework-3/Data/data2.txt",
            skip = 1,
            sep = "6",
-           col.names = c("x", "y", "z")
+           col.names = c("x", "y", "z"),
+          colClasses = c("factor", "numeric", "character")
            )
           
 
