@@ -1,0 +1,31 @@
+---
+title: "Homework 3"
+format: pdf
+editor: visual
+---
+
+## Task 1
+### a.
+
+```{r}
+?read.csv
+```
+We are unable to use read.csv because it deals with data that is delimited by commas, not semicolons. Instead, read.csv2 is able to be used.
+
+```{r}
+
+read.csv2("C:/Users/ESLil/OneDrive/Desktop/ST 558/Repos/Homework3/Homework-3/Data/data.txt")
+
+```
+### b. 
+```{r}
+
+read.table("C:/Users/ESLil/OneDrive/Desktop/ST 558/Repos/Homework3/Homework-3/Data/data2.txt",
+           skip = 1,
+           sep = "6",
+           col.names = c("x", "y", "z")
+           )
+          
+
+```
+
