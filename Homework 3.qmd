@@ -4,12 +4,14 @@ format: pdf
 editor: visual
 ---
 
+```{r, include=FALSE}
+library(tidyverse)
+library(palmerpenguins)
+
+```
+
 ## Task 1
 ### a.
-
-```{r}
-?read.csv
-```
 We are unable to use read.csv because it deals with data that is delimited by commas, not semicolons. Instead, read.csv2 is able to be used.
 
 ```{r}
@@ -24,9 +26,75 @@ read.table("C:/Users/ESLil/OneDrive/Desktop/ST 558/Repos/Homework3/Homework-3/Da
            skip = 1,
            sep = "6",
            col.names = c("x", "y", "z"),
-          colClasses = c("factor", "numeric", "character")
+           colClasses = c("factor", "numeric", "character")
            )
           
 
+```
+
+## Task 2
+### a. 
+```{r}
+
+trailblazer <- read.csv("C:/Users/ESLil/OneDrive/Desktop/ST 558/Repos/Homework3/Homework-3/Data/trailblazer.csv")
+
+glimpse(trailblazer)
+```
+### b. 
+```{r}
+
+trailblazer_longer <- trailblazer |>
+  pivot_longer(
+    cols = -Player,
+    names_to = c("Game", "Location"),
+    names_sep = "_",
+    values_to = "Points"
+  )
+
+head(trailblazer_longer)
+
+```
+### c. 
+```{r}
+trailblazer_longer |>
+  pivot_wider(names_from = Location, 
+              values_from = Points) |>
+  group_by(Player) |>
+  summarize(mean_home = mean(Home, na.rm = T), 
+            mean_away = mean (Away, na.rm = T)) |>
+  mutate(Diff = mean_home - mean_away) |>
+  arrange(Diff) 
+```
+The players that scored more points at home are the last 5 players in the tibble.
+
+## Task 3
+### a. 
+<NULL> means that there are no bill length values for that observation. 
+
+<dbl [52]> means that it is a numeric vector with 52 observations in the vector.
+
+<list> means that each column is a list.
+
+### b. 
+```{r}
+
+penguins |> 
+  select(species, island) |>
+  count(species, island) |>
+  pivot_wider(names_from = island,
+              values_fill = 0,
+              values_from = n)
+```
+## Task 4
+
+```{r}
+penguins |>
+  select(species, bill_length_mm) |>
+  mutate(bill_length_mm = case_when(
+    is.na(bill_length_mm) & species == "Adelie" ~ 26,
+    is.na(bill_length_mm) & species == "Gentoo" ~ 30,
+    TRUE ~ bill_length_mm
+  )) |>
+  arrange(bill_length_mm)
 ```
 
